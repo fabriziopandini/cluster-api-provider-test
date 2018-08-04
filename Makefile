@@ -20,21 +20,21 @@ depend:
 	dep version || go get -u github.com/golang/dep/cmd/dep
 	dep ensure
 
-depend-update: work
+depend-update: 
 	dep ensure -update
 
 generate: gendeepcopy
 
 gendeepcopy:
-	go build -o $$GOPATH/bin/deepcopy-gen sigs.k8s.io/cluster-api-provider-skeleton/vendor/k8s.io/code-generator/cmd/deepcopy-gen
+	go build -o $$GOPATH/bin/deepcopy-gen sigs.k8s.io/cluster-api-provider-test/vendor/k8s.io/code-generator/cmd/deepcopy-gen
 	deepcopy-gen \
-	  -i ./cloud/skeleton/providerconfig,./cloud/skeleton/providerconfig/v1alpha1 \
+	  -i ./cloud/test/providerconfig,./cloud/test/providerconfig/v1alpha1 \
 	  -O zz_generated.deepcopy \
 	  -h boilerplate.go.txt
 
 build: depend
-	CGO_ENABLED=0 go install -a -ldflags '-extldflags "-static"' sigs.k8s.io/cluster-api-provider-skeleton/cmd/cluster-controller
-	CGO_ENABLED=0 go install -a -ldflags '-extldflags "-static"' sigs.k8s.io/cluster-api-provider-skeleton/cmd/machine-controller
+	CGO_ENABLED=0 go install -a -ldflags '-extldflags "-static"' sigs.k8s.io/cluster-api-provider-test/cmd/cluster-controller
+	CGO_ENABLED=0 go install -a -ldflags '-extldflags "-static"' sigs.k8s.io/cluster-api-provider-test/cmd/machine-controller
 
 images: depend
 	$(MAKE) -C cmd/cluster-controller image
@@ -54,3 +54,12 @@ fmt:
 
 vet:
 	go vet ./...
+
+compile:
+	mkdir -p ./bin
+	go build -o ./bin/cluster-controller ./cmd/cluster-controller
+	go build -o ./bin/machine-controller ./cmd/machine-controller
+	go build -o ./bin/clusterctl ./clusterctl
+
+clean:
+	rm -rf ./bin

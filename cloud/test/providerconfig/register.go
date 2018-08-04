@@ -28,7 +28,7 @@ func init() {
 	localSchemeBuilder.Register(addKnownTypes)
 }
 
-const GroupName = "skeletonproviderconfig"
+const GroupName = "testproviderconfig"
 
 var SchemeGroupVersion = schema.GroupVersion{Group: GroupName, Version: runtime.APIVersionInternal}
 
@@ -42,16 +42,16 @@ func Resource(resource string) schema.GroupResource {
 
 func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&SkeletonMachineProviderConfig{},
+		&TestMachineProviderConfig{},
 	)
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&SkeletonClusterProviderConfig{},
+		&TestClusterProviderConfig{},
 	)
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&SkeletonMachineProviderStatus{},
+		&TestMachineProviderStatus{},
 	)
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&SkeletonClusterProviderStatus{},
+		&TestClusterProviderStatus{},
 	)
 	return nil
 }

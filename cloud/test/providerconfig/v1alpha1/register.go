@@ -22,16 +22,16 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/serializer"
 	clusterv1 "sigs.k8s.io/cluster-api/pkg/apis/cluster/v1alpha1"
 
-	"sigs.k8s.io/cluster-api-provider-skeleton/cloud/skeleton/providerconfig"
+	"sigs.k8s.io/cluster-api-provider-test/cloud/test/providerconfig"
 )
 
 // +k8s:deepcopy-gen=false
-type SkeletonProviderConfigCodec struct {
+type TestProviderConfigCodec struct {
 	encoder runtime.Encoder
 	decoder runtime.Decoder
 }
 
-const GroupName = "skeletonproviderconfig"
+const GroupName = "testproviderconfig"
 
 var SchemeGroupVersion = schema.GroupVersion{Group: GroupName, Version: "v1alpha1"}
 
@@ -47,16 +47,16 @@ func init() {
 
 func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&SkeletonMachineProviderConfig{},
+		&TestMachineProviderConfig{},
 	)
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&SkeletonClusterProviderConfig{},
+		&TestClusterProviderConfig{},
 	)
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&SkeletonMachineProviderStatus{},
+		&TestMachineProviderStatus{},
 	)
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&SkeletonClusterProviderStatus{},
+		&TestClusterProviderStatus{},
 	)
 	return nil
 }
@@ -72,7 +72,7 @@ func NewScheme() (*runtime.Scheme, error) {
 	return scheme, nil
 }
 
-func NewCodec() (*SkeletonProviderConfigCodec, error) {
+func NewCodec() (*TestProviderConfigCodec, error) {
 	scheme, err := NewScheme()
 	if err != nil {
 		return nil, err
@@ -82,14 +82,14 @@ func NewCodec() (*SkeletonProviderConfigCodec, error) {
 	if err != nil {
 		return nil, err
 	}
-	codec := SkeletonProviderConfigCodec{
+	codec := TestProviderConfigCodec{
 		encoder: encoder,
 		decoder: codecFactory.UniversalDecoder(SchemeGroupVersion),
 	}
 	return &codec, nil
 }
 
-func (codec *SkeletonProviderConfigCodec) DecodeFromProviderConfig(providerConfig clusterv1.ProviderConfig, out runtime.Object) error {
+func (codec *TestProviderConfigCodec) DecodeFromProviderConfig(providerConfig clusterv1.ProviderConfig, out runtime.Object) error {
 	if providerConfig.Value != nil {
 		_, _, err := codec.decoder.Decode(providerConfig.Value.Raw, nil, out)
 		if err != nil {
@@ -99,7 +99,7 @@ func (codec *SkeletonProviderConfigCodec) DecodeFromProviderConfig(providerConfi
 	return nil
 }
 
-func (codec *SkeletonProviderConfigCodec) EncodeToProviderConfig(in runtime.Object) (*clusterv1.ProviderConfig, error) {
+func (codec *TestProviderConfigCodec) EncodeToProviderConfig(in runtime.Object) (*clusterv1.ProviderConfig, error) {
 	var buf bytes.Buffer
 	if err := codec.encoder.Encode(in, &buf); err != nil {
 		return nil, fmt.Errorf("encoding failed: %v", err)
@@ -109,7 +109,7 @@ func (codec *SkeletonProviderConfigCodec) EncodeToProviderConfig(in runtime.Obje
 	}, nil
 }
 
-func (codec *SkeletonProviderConfigCodec) EncodeProviderStatus(in runtime.Object) (*runtime.RawExtension, error) {
+func (codec *TestProviderConfigCodec) EncodeProviderStatus(in runtime.Object) (*runtime.RawExtension, error) {
 	var buf bytes.Buffer
 	if err := codec.encoder.Encode(in, &buf); err != nil {
 		return nil, fmt.Errorf("encoding failed: %v", err)
@@ -118,7 +118,7 @@ func (codec *SkeletonProviderConfigCodec) EncodeProviderStatus(in runtime.Object
 	return &runtime.RawExtension{Raw: buf.Bytes()}, nil
 }
 
-func (codec *SkeletonProviderConfigCodec) DecodeProviderStatus(providerStatus *runtime.RawExtension, out runtime.Object) error {
+func (codec *TestProviderConfigCodec) DecodeProviderStatus(providerStatus *runtime.RawExtension, out runtime.Object) error {
 	if providerStatus != nil {
 		_, _, err := codec.decoder.Decode(providerStatus.Raw, nil, out)
 		if err != nil {

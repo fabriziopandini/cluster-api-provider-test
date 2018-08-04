@@ -37,12 +37,12 @@ import (
 	"sigs.k8s.io/cluster-api/pkg/controller/config"
 	"sigs.k8s.io/cluster-api/pkg/controller/sharedinformers"
 
-	clusteractuator "sigs.k8s.io/cluster-api-provider-skeleton/cloud/skeleton/actuators/cluster"
-	"sigs.k8s.io/cluster-api-provider-skeleton/cloud/skeleton/controllers/cluster/options"
+	clusteractuator "sigs.k8s.io/cluster-api-provider-test/cloud/test/actuators/cluster"
+	"sigs.k8s.io/cluster-api-provider-test/cloud/test/controllers/cluster/options"
 )
 
 const (
-	controllerName = "skeleton-cluster-controller"
+	controllerName = "test-cluster-controller"
 )
 
 func Start(server *options.Server, shutdown <-chan struct{}) {
@@ -61,7 +61,7 @@ func Start(server *options.Server, shutdown <-chan struct{}) {
 	}
 	actuator, err := clusteractuator.NewActuator(params)
 	if err != nil {
-		glog.Fatalf("Could not create skeleton cluster actuator: %v", err)
+		glog.Fatalf("Could not create test cluster actuator: %v", err)
 	}
 
 	si := sharedinformers.NewSharedInformers(config, shutdown)

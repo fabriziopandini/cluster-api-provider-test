@@ -23,15 +23,17 @@ import (
 )
 
 const (
-	ProviderName = "skeleton"
+	ProviderName = "test"
 )
 
 func init() {
+
 	actuator, err := NewActuator(ActuatorParams{})
 	if err != nil {
 		glog.Fatalf("Error creating cluster provisioner for %v : %v", ProviderName, err)
 	}
 	clustercommon.RegisterClusterProvisioner(ProviderName, actuator)
+
 }
 
 // Actuator is responsible for performing machine reconciliation

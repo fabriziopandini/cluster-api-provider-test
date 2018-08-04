@@ -23,11 +23,7 @@ aliases:
     - roberthbailey
     - rsdcastro
     - spew
-  sig-skeleton-leads:
-    - justinsb
-    - kris-nova
-    - countspongebob
-  cluster-api-skeleton-maintainers:
+  cluster-api-test-maintainers:
     - detiber
     - chuckha
     - davidewatson

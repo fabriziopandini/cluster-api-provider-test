@@ -11,6 +11,6 @@ spec:
         serviceDomain: "cluster.local"
     providerConfig:
       value:
-        apiVersion: "skeletonproviderconfig/v1alpha1"
-        kind: "SkeletonClusterProviderConfig"
+        apiVersion: "testproviderconfig/v1alpha1"
+        kind: "TestClusterProviderConfig"
 

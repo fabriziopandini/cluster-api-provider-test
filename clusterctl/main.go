@@ -17,7 +17,7 @@ limitations under the License.
 package main
 
 import (
-	_ "sigs.k8s.io/cluster-api-provider-skeleton/cloud/ssh/actuators/machine"
+	_ "sigs.k8s.io/cluster-api-provider-test/cloud/test/actuators/machine"
 	"sigs.k8s.io/cluster-api/clusterctl/cmd"
 )
 
