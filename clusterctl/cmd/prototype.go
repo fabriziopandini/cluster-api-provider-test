@@ -14,14 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
+package cmd
 
 import (
-	_ "sigs.k8s.io/cluster-api-provider-test/cloud/test/actuators/machine"
-	_ "sigs.k8s.io/cluster-api-provider-test/clusterctl/cmd"
+	"github.com/spf13/cobra"
 	"sigs.k8s.io/cluster-api/clusterctl/cmd"
 )
 
-func main() {
-	cmd.Execute()
+var prototypeCmd = &cobra.Command{
+	Use:   "prototype",
+	Short: "prototype clusterctl extension for a container of sub-commands",
+	Long:  `prototype clusterctl extension for a container of sub-commands`,
+}
+
+func init() {
+	cmd.RootCmd.AddCommand(prototypeCmd)
 }

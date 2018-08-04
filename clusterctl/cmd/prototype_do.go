@@ -14,14 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
+package cmd
 
 import (
-	_ "sigs.k8s.io/cluster-api-provider-test/cloud/test/actuators/machine"
-	_ "sigs.k8s.io/cluster-api-provider-test/clusterctl/cmd"
-	"sigs.k8s.io/cluster-api/clusterctl/cmd"
+	"github.com/golang/glog"
+	"github.com/spf13/cobra"
 )
 
-func main() {
-	cmd.Execute()
+type DoOptions struct {
+}
+
+var co = &DoOptions{}
+
+var doCmd = &cobra.Command{
+	Use:   "do",
+	Short: "prototype clusterctl extension for a sub-command",
+	Long:  `prototype clusterctl extension for a sub-command`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := RunDo(co); err != nil {
+			glog.Exit(err)
+		}
+	},
+}
+
+func RunDo(co *DoOptions) error {
+	return nil
+}
+
+func init() {
+	prototypeCmd.AddCommand(doCmd)
 }
